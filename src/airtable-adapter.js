@@ -19,10 +19,10 @@ exports.searchForCIK = async function searchForCIK(companyCIK, deadlineDate){
   }).all();
 
   if (Array.isArray(lookupCIK) && lookupCIK.length > 0) {
-    console.log("Already exists in DB – CIK: " + companyCIK + " & Deadline Date: " + deadlineDate);
+    // Company already exists in DB
     return true;
   } else {
-    console.log("Not found in DB – CIK: " + companyCIK + " & Deadline Date: " + deadlineDate);
+    // Company not found in DB
     return false;
   }
 }
@@ -32,6 +32,8 @@ exports.searchForCIK = async function searchForCIK(companyCIK, deadlineDate){
  * Add a single record/item to airtable
  * @param {*} companyName 
  * @param {*} companyURL 
+ * @param {*} campaignURL
+ * @param {*} summary
  * @param {*} companyCIK 
  * @param {*} liveStatus 
  * @param {*} fundingPortal 

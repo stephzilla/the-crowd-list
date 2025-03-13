@@ -14,14 +14,13 @@ const airtableAdapter = require('../airtable-adapter.js');
  * @param {*} event 
  * @returns {Object} List of companies that are crowdfunding
  */
-exports.handler = async (event) => {
+exports.handler = async (event) => { 
     let url = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&CIK=&type=C&company=&dateb=&owner=include&start=0&count=100&output=atom";
     let edgarFeed = await requestEdgarFeed(url);
     let cFeed = getListOfCFilers(edgarFeed);
     let primaryDocList = generatePrimaryDocList(cFeed);
     let parsedList = await parsePrimaryDocXML(primaryDocList);
-    console.log("THE PARSED LIST: ");
-    console.log(parsedList);
+
     // store the parsed list
     return await addListToTable(parsedList);
 };
@@ -93,7 +92,7 @@ async function parsePrimaryDocXML(primaryDocList){
         for (let i = 0; i < primaryDocList.length; i++) {
                 const response = await axios.get(primaryDocList[i], config);
                 let parsedResponseData = parser.parse(response.data)
-                console.log("PARSED RESPONSE DATA -- " + JSON.stringify(parsedResponseData))
+
                 let parsedObj = {
                     companyCIK: parsedResponseData.edgarSubmission.headerData.filerInfo.filer.filerCredentials.filerCik, 
                     companyName: parsedResponseData.edgarSubmission.formData.issuerInformation.issuerInfo.nameOfIssuer,
